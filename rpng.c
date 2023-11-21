@@ -15,7 +15,11 @@
 
 #include "rpng.h"
 
+#if !defined(SF2000)
 #include <zlib.h>
+#else
+#include "zlib.h"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>

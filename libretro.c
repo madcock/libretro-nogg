@@ -15,6 +15,11 @@ static void fallback_log(enum retro_log_level level, const char *fmt, ...)
 void retro_init(void)
 {
    fbpitch = SCREEN_WIDTH * sizeof(uint32_t);
+#if defined(SF2000)
+   enum retro_pixel_format fmt = RETRO_PIXEL_FORMAT_XRGB8888;
+   if (!environ_cb(RETRO_ENVIRONMENT_SET_PIXEL_FORMAT, &fmt))
+      return false;
+#endif
 }
 
 void retro_deinit(void)
@@ -132,10 +137,11 @@ void retro_run(void)
 
 bool retro_load_game(const struct retro_game_info *info)
 {
+#if !defined(SF2000)
    enum retro_pixel_format fmt = RETRO_PIXEL_FORMAT_XRGB8888;
    if (!environ_cb(RETRO_ENVIRONMENT_SET_PIXEL_FORMAT, &fmt))
       return false;
-
+#endif
    struct retro_frame_time_callback frame_cb = { frame_time_cb, 1000000 / 60 };
    frame_cb.callback(frame_cb.reference);
    environ_cb(RETRO_ENVIRONMENT_SET_FRAME_TIME_CALLBACK, &frame_cb);
