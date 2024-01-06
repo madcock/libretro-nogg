@@ -17,8 +17,7 @@ void retro_init(void)
    fbpitch = SCREEN_WIDTH * sizeof(uint32_t);
 #if defined(SF2000)
    enum retro_pixel_format fmt = RETRO_PIXEL_FORMAT_XRGB8888;
-   if (!environ_cb(RETRO_ENVIRONMENT_SET_PIXEL_FORMAT, &fmt))
-      return false;
+   environ_cb(RETRO_ENVIRONMENT_SET_PIXEL_FORMAT, &fmt);
 #endif
 }
 
@@ -49,7 +48,7 @@ void retro_get_system_info(struct retro_system_info *info)
 void retro_get_system_av_info(struct retro_system_av_info *info)
 {
    info->timing.fps = 60.0;
-   info->timing.sample_rate = 48000.0;
+   info->timing.sample_rate = 22050.0;
 
    info->geometry.base_width   = SCREEN_WIDTH;
    info->geometry.base_height  = SCREEN_HEIGHT;
